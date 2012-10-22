@@ -1,22 +1,22 @@
 window.Wine = Backbone.Model.extend({
 
-    urlRoot: "/wines",
+    urlRoot: '/wines',
 
-    idAttribute: "_id",
+    idAttribute: '_id',
 
     initialize: function () {
         this.validators = {};
 
         this.validators.name = function (value) {
-            return value.length > 0 ? {isValid: true} : {isValid: false, message: "You must enter a name"};
+            return value.length > 0 ? {isValid: true} : {isValid: false, message: 'You must enter a name'};
         };
 
         this.validators.grapes = function (value) {
-            return value.length > 0 ? {isValid: true} : {isValid: false, message: "You must enter a grape variety"};
+            return value.length > 0 ? {isValid: true} : {isValid: false, message: 'You must enter a grape variety'};
         };
 
         this.validators.country = function (value) {
-            return value.length > 0 ? {isValid: true} : {isValid: false, message: "You must enter a country"};
+            return value.length > 0 ? {isValid: true} : {isValid: false, message: 'You must enter a country'};
         };
     },
 
@@ -43,12 +43,12 @@ window.Wine = Backbone.Model.extend({
 
     defaults: {
         _id: null,
-        name: "",
-        grapes: "",
-        country: "USA",
-        region: "California",
-        year: "",
-        description: "",
+        name: '',
+        grapes: '',
+        country: 'USA',
+        region: 'California',
+        year: '',
+        description: '',
         picture: null
     }
 });
@@ -57,6 +57,6 @@ window.WineCollection = Backbone.Collection.extend({
 
     model: Wine,
 
-    url: "/wines"
+    url: '/wines'
 
 });
