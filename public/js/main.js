@@ -1,12 +1,13 @@
 var AppRouter = Backbone.Router.extend({
 
     routes: {
-        ""                  : "home",
-        "wines"	: "list",
-        "wines/page/:page"	: "list",
-        "wines/add"         : "addWine",
-        "wines/:id"         : "wineDetails",
-        "about"             : "about"
+        '': 'home',
+        'wines': 'list',
+        'wines/page/:page'	: 'list',
+        'wines/add': 'addWine',
+        'wines/:id': 'wineDetails',
+        'about': 'about',
+        'search/:searchTerm': 'handleSearch'
     },
 
     initialize: function () {
@@ -22,11 +23,11 @@ var AppRouter = Backbone.Router.extend({
         this.headerView.selectMenuItem('home-menu');
     },
 
-	list: function(page) {
+    list: function(page) {
         var p = page ? parseInt(page, 10) : 1;
         var wineList = new WineCollection();
         wineList.fetch({success: function(){
-            $("#content").html(new WineListView({model: wineList, page: p}).el);
+            $('#content').html(new WineListView({model: wineList, page: p}).el);
         }});
         this.headerView.selectMenuItem('home-menu');
     },
@@ -34,16 +35,16 @@ var AppRouter = Backbone.Router.extend({
     wineDetails: function (id) {
         var wine = new Wine({_id: id});
         wine.fetch({success: function(){
-            $("#content").html(new WineView({model: wine}).el);
+            $('#content').html(new WineView({model: wine}).el);
         }});
         this.headerView.selectMenuItem();
     },
 
-	addWine: function() {
+    addWine: function() {
         var wine = new Wine();
         $('#content').html(new WineView({model: wine}).el);
         this.headerView.selectMenuItem('add-menu');
-	},
+    },
 
     about: function () {
         if (!this.aboutView) {
@@ -51,6 +52,22 @@ var AppRouter = Backbone.Router.extend({
         }
         $('#content').html(this.aboutView.el);
         this.headerView.selectMenuItem('about-menu');
+    },
+
+    handleSearch: function (searchTerm) {
+
+        if(searchTerm === undefined || searchTerm === '') {
+            return;
+        }
+
+        var wines = new WineCollection(),
+        wineListView = new WineListView({
+            el: '#content',
+            model: wines,
+            page : 1 });
+        wines.search(searchTerm);
+        this.headerView.selectMenuItem('home-menu');
+        
     }
 
 });

@@ -52,11 +52,3 @@ window.Wine = Backbone.Model.extend({
         picture: null
     }
 });
-
-window.WineCollection = Backbone.Collection.extend({
-
-    model: Wine,
-
-    url: '/wines'
-
-});
