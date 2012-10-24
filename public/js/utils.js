@@ -11,7 +11,7 @@ window.utils = {
                     window[view].prototype.template = _.template(data);
                 }));
             } else {
-                alert(view + " not found");
+                alert(view + ' not found');
             }
         });
 
@@ -40,7 +40,7 @@ window.utils = {
     },
 
     showAlert: function(title, text, klass) {
-        $('.alert').removeClass("alert-error alert-warning alert-success alert-info");
+        $('.alert').removeClass('alert-error alert-warning alert-success alert-info');
         $('.alert').addClass(klass);
         $('.alert').html('<strong>' + title + '</strong> ' + text);
         $('.alert').show();
