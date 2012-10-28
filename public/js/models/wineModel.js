@@ -1,6 +1,6 @@
 window.Wine = Backbone.Model.extend({
 
-    urlRoot: '/wines',
+    urlRoot: 'http://localhost:3001/wines',
 
     idAttribute: '_id',
 

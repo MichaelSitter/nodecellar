@@ -1,15 +1,23 @@
 var express = require('express'),
-    path = require('path'),
-    http = require('http'),
-    wine = require('./routes/wines');
+path = require('path'),
+http = require('http'),
+wine = require('./routes/wines');
 
-var app = express();
+var app = express(),
+allowCrossDomain = function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+	next();
+};
 
 app.configure(function () {
-    app.set('port', process.env.PORT || 3000);
-    app.use(express.logger('dev'));  /* 'default', 'short', 'tiny', 'dev' */
-    app.use(express.bodyParser()),
-    app.use(express.static(path.join(__dirname, 'public')));
+	app.set('port', process.env.PORT || 3001);
+	app.use(express.logger('dev'));  /* 'default', 'short', 'tiny', 'dev' */
+	app.use(express.bodyParser()),
+	app.use(express.static(path.join(__dirname, 'public')));
+	app.use(allowCrossDomain);
 });
 
 app.get('/wines', wine.findAll);
@@ -19,5 +27,5 @@ app.put('/wines/:id', wine.updateWine);
 app.delete('/wines/:id', wine.deleteWine);
 
 http.createServer(app).listen(app.get('port'), function () {
-    console.log("Express server listening on port " + app.get('port'));
+	console.log("Express server listening on port " + app.get('port'));
 });

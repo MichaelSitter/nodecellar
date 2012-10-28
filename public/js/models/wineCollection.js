@@ -2,7 +2,7 @@ window.WineCollection = Backbone.Collection.extend({
 
     model: Wine,
 
-    url: '/wines',
+    url: 'http://localhost:3001/wines',
 
     search: function(searchTerm) {
 
