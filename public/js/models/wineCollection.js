@@ -4,7 +4,7 @@ window.WineCollection = Backbone.Collection.extend({
 
     url: 'http://localhost:3001/wines',
 
-    search: function(searchTerm) {
+    search: function(searchTerm, options) {
 
         var self = this;
         this.fetch({ success: function() {
@@ -28,6 +28,10 @@ window.WineCollection = Backbone.Collection.extend({
             });
 
             self.remove(filteredModels);
+
+            if(options.success){
+                options.success();
+            }
         }});
     }
 });

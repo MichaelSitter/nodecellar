@@ -3,20 +3,25 @@
     var appController = function() {
         return {
             home: function (id) {
-                if (!this.homeView) {
-                    this.homeView = new HomeView();
-                }
-                $('#content').html(this.homeView.el);
-                this.headerView.selectMenuItem('home-menu');
+
+                // if (!this.homeView) {
+                //     this.homeView = new HomeView();
+                // }
+                // $('#content').html(this.homeView.el);
+
+                nodeCellar.App.Layout.content.show(new nodeCellar.Views.HomeView());
+
+                this.menuItemSelected('home-menu');
             },
 
             list: function(page) {
+
                 var p = page ? parseInt(page, 10) : 1;
                 var wineList = new WineCollection();
                 wineList.fetch({success: function(){
                     $('#content').html(new WineListView({model: wineList, page: p}).el);
                 }});
-                this.headerView.selectMenuItem('home-menu');
+                this.menuItemSelected('home-menu');
             },
 
             wineDetails: function (id) {
@@ -24,13 +29,13 @@
                 wine.fetch({success: function(){
                     $('#content').html(new WineView({model: wine}).el);
                 }});
-                this.headerView.selectMenuItem();
+                this.menuItemSelected();
             },
 
             addWine: function() {
                 var wine = new Wine();
                 $('#content').html(new WineView({model: wine}).el);
-                this.headerView.selectMenuItem('add-menu');
+                this.menuItemSelected('add-menu');
             },
 
             about: function () {
@@ -38,7 +43,7 @@
                     this.aboutView = new AboutView();
                 }
                 $('#content').html(this.aboutView.el);
-                this.headerView.selectMenuItem('about-menu');
+                this.menuItemSelected('about-menu');
             },
 
             handleSearch: function (searchTerm) {
@@ -48,18 +53,31 @@
                 }
 
                 var wines = new WineCollection(),
-                wineListView = new WineListView({
-                    el: '#content',
-                    model: wines,
-                    page : 1
-                });
+                    page = 1,
+                    wineListView = new WineListView({
+                        el: '#content',
+                        model: wines,
+                        page : page
+                    });
 
-                wines.search(searchTerm);
-                this.headerView.selectMenuItem('home-menu');
+                wines.search(searchTerm, {
+                    success: function() {
+                        $('#content').html(new WineListView({model: wines, page: page}).el);
+                    }
+                });
+                this.menuItemSelected('home-menu');
+            },
+            
+            menuItemSelected: function(item){
+
+                // Using the application vent object as our global event aggregator
+                nodeCellar.App.vent.trigger(
+                    nodeCellar.Constants.Events.MenuItemSelected, // Event name
+                    item); // Options
             }
         };
     };
 
     nodeCellar.AppController = appController;
-    
+
 })(window.NodeCellar);

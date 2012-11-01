@@ -6,5 +6,9 @@ NodeCellar.Constants = {
 		HomeView: '#HomeView',
 		WineListItemView: '#WineListItemView',
 		WineView: '#WineView'
+	},
+
+	Events: {
+		MenuItemSelected: 'MenuItemSelected'
 	}
 };
