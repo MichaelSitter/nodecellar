@@ -1,9 +1,9 @@
 (function(nodeCellar, backbone){
 	nodeCellar.AppRouter = backbone.Marionette.AppRouter.extend({
 		
-		controller: nodeCellar.AppController,
+		controller: new nodeCellar.AppController(),
 
-		routes: {
+		appRoutes: {
 			'': 'home',
 			'wines': 'list',
 			'wines/page/:page'	: 'list',

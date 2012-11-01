@@ -1,17 +1,9 @@
-(function(backbone){
-    HeaderView = Backbone.View.extend({
+(function(nodeCellar, backbone){
+    nodeCellar.Views.HeaderView = Backbone.Marionette.ItemView.extend({
 
-        initialize: function () {
-            this.render();
-        },
-
+        template: '#HeaderView',
         events: {
             'keypress' : 'onSubmit'
-        },
-
-        render: function () {
-            $(this.el).html(this.template());
-            return this;
         },
 
         selectMenuItem: function (menuItem) {
@@ -33,4 +25,5 @@
         }
 
     });
-})(window.Backbone);
+    
+})(NodeCellar, Backbone);

@@ -1,11 +1,24 @@
 NodeCellar = {};
 
+NodeCellar.Views = {};
+NodeCellar.Models = {};
+NodeCellar.Collections = {};
+
 NodeCellar.App = new Backbone.Marionette.Application();
 
-// TODO: Add initializers to setup application
+// Setup default application views
 NodeCellar.App.addInitializer(function(){
-	this.headerView = new HeaderView();
-	$('.header').html(this.headerView.el);
+
+	NodeCellar.App.addRegions({
+		main: '#main-region'
+	});
+
+	var layout = new NodeCellar.Views.AppLayout();
+
+	NodeCellar.App.Layout = layout;
+	NodeCellar.App.main.show(layout);
+
+	layout.header.show(new NodeCellar.Views.HeaderView());
 });
 
 NodeCellar.App.addInitializer(function(){
